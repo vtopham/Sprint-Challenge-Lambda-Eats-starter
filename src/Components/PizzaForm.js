@@ -36,6 +36,8 @@ const OrderMessage = styled.div`
 
 function PizzaForm(props) {
 
+    const {postRes, setPostRes} = props
+
     //SET UP STATE
     const [formInput, setFormInput] = useState({
         name: "",
@@ -51,7 +53,6 @@ function PizzaForm(props) {
         name: ""
     })
 
-    const [postRes, setPostRes] = useState("")
 
     //UPDATE STATE WITH FORM INPUT
     const inputChange = (event) => {
