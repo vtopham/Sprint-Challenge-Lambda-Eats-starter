@@ -68,12 +68,6 @@ function PizzaForm(props) {
 
     //ENABLE BUTTON WHEN DATA IS VALID
 
-    // useEffect(() => {
-    //     validationSchema.isValid(formInput).then(valid => {
-    //         setButtonDisabled(!valid);
-    //     })
-    // })
-
     useEffect(() => {
         validationSchema.isValid(formInput).then(valid => {
             setButtonDisabled(!valid);
