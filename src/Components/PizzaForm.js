@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import Header from "./Header"
 import styled from "styled-components"
 import * as yup from "yup"
+import axios from "axios"
 
 
 
@@ -26,6 +27,10 @@ const Submit = styled.button`
 
 const ErrorMessage = styled.p`
     color: red;
+`
+
+const OrderMessage = styled.div`
+
 
 `
 
@@ -45,6 +50,9 @@ function PizzaForm(props) {
     const [err, setErr] = useState({
         name: ""
     })
+
+    const [postRes, setPostRes] = useState("")
+
     //UPDATE STATE WITH FORM INPUT
     const inputChange = (event) => {
         event.persist()
@@ -57,6 +65,22 @@ function PizzaForm(props) {
 
     const submitForm = (event) => {
         event.preventDefault();
+
+        axios.post("https://reqres.in/api/users",formInput)
+        .then(res => {
+            setPostRes(res.data)
+            console.log(res.data)
+            setFormInput({
+                name: "",
+                size: "",
+                extraCheese: false,
+                gummyWorms: false,
+                birthdayCake: false,
+                sawdust: false,
+                instructions: ""
+            })
+        })
+
     }
 
     //VALIDATION SCHEMA & FUNCTION
@@ -64,25 +88,27 @@ function PizzaForm(props) {
     const validationSchema = yup.object().shape({
         name: yup
             .string()
-            .min(2, "Your name must be at least two characters.")
+            .min(2, "Your name must be at least two characters."),
     })
 
     const validateInput = (event) => {
-        yup
-        .reach(validationSchema, event.target.name)
-        .validate(event.target.value)
-        .then( valid => {
-            setErr({
-                ...err,
-                [event.target.name]: ""
+        if (event.target.name === "name"){
+            yup
+            .reach(validationSchema, event.target.name)
+            .validate(event.target.value)
+            .then( valid => {
+                setErr({
+                    ...err,
+                    [event.target.name]: ""
+                })
             })
-        })
-        .catch (error => {
-            setErr({
-                ...err,
-                [event.target.name]: error.errors[0]
-            })
-        });
+            .catch (error => {
+                setErr({
+                    ...err,
+                    [event.target.name]: error.errors[0]
+                })
+            });
+        }
     }
     
     return (
@@ -102,7 +128,7 @@ function PizzaForm(props) {
             <br/>
 
             <p>Toppings</p>
-            <div class = "toppings">
+            <div className = "toppings">
                 <input onChange = {inputChange} type = "checkbox" name = "extraCheese"id = "extraCheese" checked = {formInput.extraCheese}/>
                 <label htmlFor = "extraCheese">Extra cheese</label>
 
@@ -122,6 +148,21 @@ function PizzaForm(props) {
             
             <Submit>Submit</Submit>
         </form>
+
+        {postRes === "" ? null : 
+        <div>
+            <h1>Your order was successfully placed!</h1>
+            <p>Name: {postRes.name}</p>
+            <p>Size: {postRes.size}</p>
+            <p>Toppings:</p>
+                <ul>
+                    {postRes.extraCheese ? <li>Extra Cheese</li> : null }
+                    {postRes.birthdayCake ? <li>A whole birthday cake</li> : null }
+                    {postRes.sawdust ? <li>Sawdust</li> : null }
+                    {postRes.gummyWorms ? <li>Gummyworms</li> : null }
+                </ul> 
+            <p>Soecial Instructions: {postRes.instructions}</p>
+        </div>}
         </>
     )
 }
