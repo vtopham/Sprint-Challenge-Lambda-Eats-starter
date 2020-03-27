@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import {Link} from "react-router-dom"
 import Header from "./Header"
 import styled from "styled-components"
 import * as yup from "yup"
@@ -11,16 +12,29 @@ const Submit = styled.button`
     width: 70px;
     border-radius: 10px;
 
-    font-size: 16px;
-
-    color: white;
     background: red;
     border: 1px solid red;
 
     &:hover {
         background: white;
-        color: red;
+        * {
+            color: red;
+        }
     }
+
+    * {
+        height: 100%;
+        width: 100%;
+        font-size: 16px;
+        text-decoration: none;
+
+        color: white;
+
+
+    
+
+    }
+    
 
 
 `
@@ -147,7 +161,9 @@ function PizzaForm(props) {
             <textarea onChange = {inputChange} name = "instructions" id = "instructions" rows = "4" cols = "50" value = {formInput.instructions} data-cy = "instructions"/>
             <br/>
             
-            <Submit data-cy = "submit">Submit</Submit>
+            <Submit data-cy = "submit">
+                <Link to = "/pizza/success">Submit</Link>
+            </Submit>
         </form>
 
         {postRes === "" ? null : 
