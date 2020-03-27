@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {useHistory} from "react-router-dom"
 import Header from "./Header"
 import styled from "styled-components"
@@ -15,13 +15,22 @@ const Submit = styled.button`
     background: red;
     border: 1px solid red;
 
-    color: white
+    color: white;
     font-size: 24px;
 
     &:hover {
         background: white;
-         color: red;
+        color: red;
       
+    }
+
+    &:disabled {
+        background: lightgray;
+        border: 1px solid gray;
+
+        &:hover {
+            color: white;
+        }
     }
 
 `
@@ -48,13 +57,30 @@ function PizzaForm(props) {
         gummyWorms: false,
         birthdayCake: false,
         sawdust: false,
-        instructions: ""
+        instructions: "please include utensils"
     })
 
     const [err, setErr] = useState({
         name: ""
     })
 
+    const [buttonDisabled, setButtonDisabled] = useState(true)
+
+    //ENABLE BUTTON WHEN DATA IS VALID
+
+    // useEffect(() => {
+    //     validationSchema.isValid(formInput).then(valid => {
+    //         setButtonDisabled(!valid);
+    //     })
+    // })
+
+    useEffect(() => {
+        validationSchema.isValid(formInput).then(valid => {
+            setButtonDisabled(!valid);
+        })
+    })
+
+   
 
     //UPDATE STATE WITH FORM INPUT
     const inputChange = (event) => {
@@ -80,7 +106,7 @@ function PizzaForm(props) {
                 gummyWorms: false,
                 birthdayCake: false,
                 sawdust: false,
-                instructions: ""
+                instructions: "please include utensils"
             })
         })
 
@@ -93,7 +119,21 @@ function PizzaForm(props) {
     const validationSchema = yup.object().shape({
         name: yup
             .string()
+            .required("Please enter your name.")
             .min(2, "Your name must be at least two characters."),
+        size: yup
+            .string(),
+        extraCheese: yup
+            .boolean(),
+        gummyWorms: yup
+            .boolean(),
+        birthdayCake: yup
+            .boolean(),
+        sawdust: yup
+            .boolean(),
+        instructions: yup
+            .string()
+        
     })
 
     const validateInput = (event) => {
@@ -151,7 +191,7 @@ function PizzaForm(props) {
             <textarea onChange = {inputChange} name = "instructions" id = "instructions" rows = "4" cols = "50" value = {formInput.instructions} data-cy = "instructions"/>
             <br/>
             
-            <Submit data-cy = "submit">
+            <Submit disabled = {buttonDisabled} data-cy = "submit">
                 Submit
             </Submit>
         </form>
