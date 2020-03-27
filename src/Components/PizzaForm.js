@@ -39,8 +39,14 @@ const ErrorMessage = styled.p`
     color: red;
 `
 
-const OrderMessage = styled.div`
 
+const OrderForm = styled.form`
+    margin-left: 5%;
+
+    * {
+        margin: 1% 0;
+        
+    }
 
 `
 
@@ -154,7 +160,7 @@ function PizzaForm(props) {
         <>
         <Header/>
         <h1> Let's order a pizza.</h1>
-        <form onSubmit = {submitForm}>
+        <OrderForm onSubmit = {submitForm}>
             <label htmlFor = "name">Name: </label>
             <input onChange = {inputChange} type = "text" name = "name" id = "name" value = {formInput.name} data-cy = "name"/>
             {err.name.length > 0 ? <ErrorMessage>{err.name}</ErrorMessage> : <br/>}
@@ -188,7 +194,7 @@ function PizzaForm(props) {
             <Submit disabled = {buttonDisabled} data-cy = "submit">
                 Submit
             </Submit>
-        </form>
+        </OrderForm>
 
         
         </>
