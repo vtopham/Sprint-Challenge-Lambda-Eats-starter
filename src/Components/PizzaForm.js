@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {Link} from "react-router-dom"
+import {useHistory} from "react-router-dom"
 import Header from "./Header"
 import styled from "styled-components"
 import * as yup from "yup"
@@ -9,33 +9,20 @@ import axios from "axios"
 
 const Submit = styled.button`
     height: 50px;
-    width: 70px;
+    width: 120px;
     border-radius: 10px;
 
     background: red;
     border: 1px solid red;
 
+    color: white
+    font-size: 24px;
+
     &:hover {
         background: white;
-        * {
-            color: red;
-        }
+         color: red;
+      
     }
-
-    * {
-        height: 100%;
-        width: 100%;
-        font-size: 16px;
-        text-decoration: none;
-
-        color: white;
-
-
-    
-
-    }
-    
-
 
 `
 
@@ -50,6 +37,7 @@ const OrderMessage = styled.div`
 
 function PizzaForm(props) {
 
+    const history = useHistory();
     const {postRes, setPostRes} = props
 
     //SET UP STATE
@@ -95,6 +83,8 @@ function PizzaForm(props) {
                 instructions: ""
             })
         })
+
+        history.push("/pizza/success")
 
     }
 
@@ -162,24 +152,11 @@ function PizzaForm(props) {
             <br/>
             
             <Submit data-cy = "submit">
-                <Link to = "/pizza/success">Submit</Link>
+                Submit
             </Submit>
         </form>
 
-        {postRes === "" ? null : 
-        <div>
-            <h1 data-cy = "success">Your order was successfully placed!</h1>
-            <p>Name: {postRes.name}</p>
-            <p>Size: {postRes.size}</p>
-            <p>Toppings:</p>
-                <ul>
-                    {postRes.extraCheese ? <li>Extra Cheese</li> : null }
-                    {postRes.birthdayCake ? <li>A whole birthday cake</li> : null }
-                    {postRes.sawdust ? <li>Sawdust</li> : null }
-                    {postRes.gummyWorms ? <li>Gummyworms</li> : null }
-                </ul> 
-            <p>Soecial Instructions: {postRes.instructions}</p>
-        </div>}
+        
         </>
     )
 }

@@ -1,12 +1,12 @@
 import React from "react"
-
+import Header from "./Header"   
 
 function SuccessPage(props) {
     const {postRes, setPostRes} = props
 
     return(
         <>
-       
+       <Header/>
         <div>
             <h1 data-cy = "success">Congrats! Pizza is on its way.</h1>
             <p>Name: {postRes.name}</p>
