@@ -9,6 +9,12 @@ describe("this block of tests will meet MVP", function() {
         cy.get("[data-cy = name")
         .type("Victoria")
         .should("have.value", "Victoria");
+
+        //test that you can select another size of pizza ***(STRETCH)***
+        cy.get("[data-cy = size]")
+        .select("150 inch")
+        .should("have.value", "150 inch")
+
         //test that you can select multiple toppings
         cy.get("[data-cy = extraCheese]")
         .check()
