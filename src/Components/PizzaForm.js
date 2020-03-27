@@ -1,13 +1,35 @@
 import React, {useState} from "react"
 import Header from "./Header"
+import styled from "styled-components"
 
 
+
+const Submit = styled.button`
+    height: 50px;
+    width: 70px;
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    color: white;
+    background: red;
+    border: 1px solid red;
+
+    &:hover {
+        background: white;
+        color: red;
+    }
+
+
+`
 
 
 
 
 
 function PizzaForm(props) {
+
+    //SET UP STATE
     const [formInput, setFormInput] = useState({
         name: "",
         size: "",
@@ -18,19 +40,23 @@ function PizzaForm(props) {
         instructions: ""
     })
 
+    //UPDATE STATE WITH FORM INPUT
     const inputChange = (event) => {
         setFormInput({
             ...formInput,
             [event.target.name]: event.target.type === "checkbox" ? event.target.checked : event.target.value
         })
+    }
 
+    const submitForm = (event) => {
+        event.preventDefault();
     }
 
     return (
         <>
         <Header/>
         <h1> Let's order a pizza.</h1>
-        <form>
+        <form onSubmit = {submitForm}>
             <label htmlFor = "name">Name: </label>
             <input onChange = {inputChange} type = "text" name = "name" id = "name" value = {formInput.name}/>
             <br/>
@@ -59,6 +85,9 @@ function PizzaForm(props) {
 
             <label htmlFor = "instructions">Special Instructions</label> <br/>
             <textarea onChange = {inputChange} name = "instructions" id = "instructions" rows = "4" cols = "50" value = {formInput.instructions}/>
+            <br/>
+            
+            <Submit>Submit</Submit>
         </form>
         </>
     )
