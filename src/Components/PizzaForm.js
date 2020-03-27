@@ -72,7 +72,7 @@ function PizzaForm(props) {
             console.log(res.data)
             setFormInput({
                 name: "",
-                size: "",
+                size: "10 inches",
                 extraCheese: false,
                 gummyWorms: false,
                 birthdayCake: false,
@@ -117,11 +117,11 @@ function PizzaForm(props) {
         <h1> Let's order a pizza.</h1>
         <form onSubmit = {submitForm}>
             <label htmlFor = "name">Name: </label>
-            <input onChange = {inputChange} type = "text" name = "name" id = "name" value = {formInput.name}/>
+            <input onChange = {inputChange} type = "text" name = "name" id = "name" value = {formInput.name} data-cy = "name"/>
             {err.name.length > 0 ? <ErrorMessage>{err.name}</ErrorMessage> : <br/>}
 
             <label htmlFor = "size">Size: </label>
-            <select onChange = {inputChange} name = "size" id = "size" value = {formInput.size}>
+            <select onChange = {inputChange} name = "size" id = "size" value = {formInput.size} data-cy = "size">
                 <option value = "10 inch">10"</option>
                 <option value = "150 inch">150"</option>
             </select>
@@ -129,29 +129,29 @@ function PizzaForm(props) {
 
             <p>Toppings</p>
             <div className = "toppings">
-                <input onChange = {inputChange} type = "checkbox" name = "extraCheese"id = "extraCheese" checked = {formInput.extraCheese}/>
+                <input onChange = {inputChange} type = "checkbox" name = "extraCheese"id = "extraCheese" checked = {formInput.extraCheese} data-cy = "extraCheese"  />
                 <label htmlFor = "extraCheese">Extra cheese</label>
 
-                <input onChange = {inputChange} type = "checkbox" name = "gummyWorms"id = "gummyWorms" checked = {formInput.gummyWorms}/>
+                <input onChange = {inputChange} type = "checkbox" name = "gummyWorms"id = "gummyWorms" checked = {formInput.gummyWorms} data-cy = "gummyWorms"/>
                 <label htmlFor = "gummyWorms">Gummy worms</label>
 
-                <input onChange = {inputChange} type = "checkbox" name = "birthdayCake"id = "birthdayCake" checked = {formInput.birthdayCake}/>
+                <input onChange = {inputChange} type = "checkbox" name = "birthdayCake"id = "birthdayCake" checked = {formInput.birthdayCake} data-cy = "birthdayCake" />
                 <label htmlFor = "birthdayCake">A whole birthday cake</label>
 
-                <input onChange = {inputChange} type = "checkbox" name = "sawdust"id = "sawdust" checked = {formInput.sawdust}/>
+                <input onChange = {inputChange} type = "checkbox" name = "sawdust"id = "sawdust" checked = {formInput.sawdust} data-cy = "sawdust"/>
                 <label htmlFor = "sawdust">Sawdust</label>
             </div>
 
             <label htmlFor = "instructions">Special Instructions</label> <br/>
-            <textarea onChange = {inputChange} name = "instructions" id = "instructions" rows = "4" cols = "50" value = {formInput.instructions}/>
+            <textarea onChange = {inputChange} name = "instructions" id = "instructions" rows = "4" cols = "50" value = {formInput.instructions} data-cy = "instructions"/>
             <br/>
             
-            <Submit>Submit</Submit>
+            <Submit data-cy = "submit">Submit</Submit>
         </form>
 
         {postRes === "" ? null : 
         <div>
-            <h1>Your order was successfully placed!</h1>
+            <h1 data-cy = "success">Your order was successfully placed!</h1>
             <p>Name: {postRes.name}</p>
             <p>Size: {postRes.size}</p>
             <p>Toppings:</p>
